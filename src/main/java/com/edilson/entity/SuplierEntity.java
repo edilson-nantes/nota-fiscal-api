@@ -2,7 +2,7 @@ package com.edilson.entity;
 
 import java.time.LocalDateTime;
 
-import com.edilson.enums.SituationProduct;
+import com.edilson.enums.SituationSuplier;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,8 +16,8 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_products")
-public class ProductEntity{
+@Table(name = "tb_supliers")
+public class SuplierEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +26,24 @@ public class ProductEntity{
     @Column(unique = true, nullable = false, length = 50)
     private String code;
 
-    @Column(nullable = false, length = 150)
-    private String description;
+    @Column(name = "legal_name", nullable = false, length = 150)
+    private String legalName;
+
+    @Column(nullable = false, length = 100)
+    private String email;
+
+    @Column(nullable = false, length = 20)
+    private String phone;
+
+    @Column(unique = true, nullable = false, length = 18)
+    private String cnpj;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private SituationProduct situation;
+    private SituationSuplier situation;
+
+    @Column(name = "data_baixa", nullable = true)
+    private LocalDateTime dataBaixa;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -39,7 +51,7 @@ public class ProductEntity{
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public ProductEntity() {
+    public SuplierEntity() {
     }
 
     @PrePersist
@@ -65,19 +77,51 @@ public class ProductEntity{
         this.code = code;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLegalName() {
+        return legalName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLegalName(String legalName) {
+        this.legalName = legalName;
     }
 
-    public SituationProduct getSituation() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public SituationSuplier getSituation() {
         return situation;
     }
 
-    public void setSituation(SituationProduct situation) {
+    public void setSituation(SituationSuplier situation) {
         this.situation = situation;
+    }
+
+    public LocalDateTime getDataBaixa() {
+        return dataBaixa;
+    }
+
+    public void setDataBaixa(LocalDateTime dataBaixa) {
+        this.dataBaixa = dataBaixa;
     }
 }
