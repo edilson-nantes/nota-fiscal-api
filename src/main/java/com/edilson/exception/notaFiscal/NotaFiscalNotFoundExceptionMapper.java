@@ -1,4 +1,4 @@
-package com.edilson.exception;
+package com.edilson.exception.notaFiscal;
 
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;

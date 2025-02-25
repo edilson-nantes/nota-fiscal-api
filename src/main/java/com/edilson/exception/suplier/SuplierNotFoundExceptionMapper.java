@@ -1,4 +1,4 @@
-package com.edilson.exception;
+package com.edilson.exception.suplier;
 
 
 import jakarta.ws.rs.core.Response;

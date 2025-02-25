@@ -40,7 +40,7 @@ public class NotaFiscalEntity {
     @Column(nullable = false)
     private String address;
 
-    @Column(name = "total_value", nullable = false, columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")
+    @Column(name = "total_value", nullable = false, columnDefinition = "DECIMAL(10,2)")
     private float totalValue = 0.00f;
 
     @Column(name = "created_at", nullable = false, updatable = false)

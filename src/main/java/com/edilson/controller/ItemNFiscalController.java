@@ -4,6 +4,7 @@ import com.edilson.entity.ItemNfiscalEntity;
 import com.edilson.service.ItemNfiscalService;
 
 import jakarta.transaction.Transactional;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
@@ -22,11 +23,8 @@ import jakarta.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ItemNFiscalController {
 
-    private final ItemNfiscalService itemNfiscalService;
-
-    public ItemNFiscalController(ItemNfiscalService itemNfiscalService) {
-        this.itemNfiscalService = itemNfiscalService;
-    }
+    @Inject
+    ItemNfiscalService itemNfiscalService;
     
     @GET
     public Response findAll(@QueryParam("page") @DefaultValue("0") Integer page,

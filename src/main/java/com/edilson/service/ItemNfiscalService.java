@@ -3,23 +3,23 @@ package com.edilson.service;
 import java.util.List;
 
 import com.edilson.entity.ItemNfiscalEntity;
-import com.edilson.exception.ItemNfiscalNotFoundException;
+import com.edilson.exception.itemNfiscal.ItemNfiscalNotFoundException;
 import com.edilson.repository.ItemNfiscalRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class ItemNfiscalService {
 
-    private final ItemNfiscalRepository itemNfiscalRepository;
-    private final NotaFiscalService notaFiscalService;
-    private final ProductService productService;
-
-    public ItemNfiscalService(ItemNfiscalRepository itemNfiscalRepository, NotaFiscalService notaFiscalService, ProductService productService) {
-        this.itemNfiscalRepository = itemNfiscalRepository;
-        this.notaFiscalService = notaFiscalService;
-        this.productService = productService;
-    }
+    @Inject
+    ItemNfiscalRepository itemNfiscalRepository;
+    
+    @Inject
+    NotaFiscalService notaFiscalService;
+    
+    @Inject
+    ProductService productService;
 
     public List<ItemNfiscalEntity> findAll(Integer page, Integer pageSize) {
         return itemNfiscalRepository.findAll()
