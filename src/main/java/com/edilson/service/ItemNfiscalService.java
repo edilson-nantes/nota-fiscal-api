@@ -3,7 +3,7 @@ package com.edilson.service;
 import java.util.List;
 
 import com.edilson.entity.ItemNfiscalEntity;
-import com.edilson.exception.ItemNfiscalNotFoundException;
+import com.edilson.exception.itemNfiscal.ItemNfiscalNotFoundException;
 import com.edilson.repository.ItemNfiscalRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;

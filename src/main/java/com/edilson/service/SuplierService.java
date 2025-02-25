@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.edilson.entity.SuplierEntity;
-import com.edilson.exception.SuplierNotFoundException;
+import com.edilson.exception.suplier.DuplicatedSuplierException;
+import com.edilson.exception.suplier.InvalidSuplierAlterationException;
+import com.edilson.exception.suplier.SuplierNotFoundException;
 import com.edilson.repository.SuplierRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -27,14 +29,14 @@ public class SuplierService {
             .firstResultOptional();
         
         if (suplier.isPresent()) {
-            throw new IllegalArgumentException("CNPJ já cadastrado");
+            throw new DuplicatedSuplierException("CNPJ já cadastrado");
         }
 
         var suplierCode = suplierRepository.find("code", suplierEntity.getCode())
             .firstResultOptional();
         
         if (suplierCode.isPresent()) {
-            throw new IllegalArgumentException("Código já cadastrado");
+            throw new DuplicatedSuplierException("Código já cadastrado");
         }
         
         suplierRepository.persist(suplierEntity);
@@ -58,7 +60,7 @@ public class SuplierService {
                 
                 return suplier;
             } else {
-                throw new IllegalArgumentException("Suplier has movement and cannot be updated");
+                throw new InvalidSuplierAlterationException("Suplier has movement and cannot be updated");
                 
             }
         } else {
@@ -80,7 +82,7 @@ public class SuplierService {
         var suplier = findById(id);
 
         if (suplier.isHasMovement()) {
-            throw new IllegalArgumentException("Suplier has movement and cannot be deleted");
+            throw new InvalidSuplierAlterationException("Suplier has movement and cannot be deleted");
         }
         
         suplierRepository.delete(suplier);

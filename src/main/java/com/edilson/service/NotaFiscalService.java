@@ -3,7 +3,7 @@ package com.edilson.service;
 import java.util.List;
 
 import com.edilson.entity.NotaFiscalEntity;
-import com.edilson.exception.NotaFiscalNotFoundException;
+import com.edilson.exception.notaFiscal.NotaFiscalNotFoundException;
 import com.edilson.repository.NotaFiscalRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;

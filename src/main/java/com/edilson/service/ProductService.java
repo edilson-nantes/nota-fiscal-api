@@ -3,8 +3,8 @@ package com.edilson.service;
 import java.util.List;
 
 import com.edilson.entity.ProductEntity;
-import com.edilson.exception.InvalidProductAlterationException;
-import com.edilson.exception.ProductNotFoundException;
+import com.edilson.exception.product.InvalidProductAlterationException;
+import com.edilson.exception.product.ProductNotFoundException;
 import com.edilson.repository.ProductRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
