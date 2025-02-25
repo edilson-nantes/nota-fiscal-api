@@ -3,6 +3,7 @@ package com.edilson.service;
 import java.util.List;
 
 import com.edilson.entity.ProductEntity;
+import com.edilson.exception.InvalidProductAlterationException;
 import com.edilson.exception.ProductNotFoundException;
 import com.edilson.repository.ProductRepository;
 
@@ -43,7 +44,7 @@ public class ProductService {
 
                 return product;
             } else {
-                throw new IllegalStateException("Only the situation can be updated for a product with movement");
+                throw new InvalidProductAlterationException("Product has movement and cannot be updated");
             }
         } else {
             product.setCode(productEntity.getCode());
@@ -59,7 +60,7 @@ public class ProductService {
         var product = findById(id);
 
         if (product.isHasMovement()) {
-            throw new IllegalStateException("Product has movement and cannot be deleted");
+            throw new InvalidProductAlterationException("Product has movement and cannot be deleted");
         }
         
         productRepository.delete(product);

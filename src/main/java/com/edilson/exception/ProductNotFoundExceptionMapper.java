@@ -9,7 +9,8 @@ public class ProductNotFoundExceptionMapper implements ExceptionMapper<ProductNo
 
     @Override
     public Response toResponse(ProductNotFoundException exception) {
-        return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Product not found")
+        return Response.status(Response.Status.NOT_FOUND.getStatusCode())
+            .entity(exception.getMessage())
             .build();
     }
     
