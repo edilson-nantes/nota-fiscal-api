@@ -50,5 +50,16 @@ public class ProductService {
         
         productRepository.delete(product);
     }
+
+    public List<ProductEntity> searchProducts(String code, String description) {
+        String searchCode = (code != null) ? "%" + code.toLowerCase() + "%" : "%";
+        String searchDescription = (description != null) ? "%" + description.toLowerCase() + "%" : "%";
+        
+        var query = productRepository.find("LOWER(code) LIKE ?1 OR LOWER(description) LIKE ?2", 
+                                           searchCode, 
+                                           searchDescription);
+                                           
+        return query.list();
+    }
     
 }

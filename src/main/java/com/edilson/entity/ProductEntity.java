@@ -36,7 +36,10 @@ public class ProductEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private SituationProduct situation;
+    private SituationProduct situation = SituationProduct.Ativo;
+
+    @Column(name = "has_movement", nullable = false)
+    private boolean hasMovement = false;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();

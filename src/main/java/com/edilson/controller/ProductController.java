@@ -1,5 +1,7 @@
 package com.edilson.controller;
 
+import java.util.List;
+
 import com.edilson.entity.ProductEntity;
 import com.edilson.service.ProductService;
 
@@ -62,5 +64,13 @@ public class ProductController {
         productService.deleteProduct(id);
         
         return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/search")
+    public Response searchProducts(@QueryParam("code") String code,
+                                   @QueryParam("description") String description) {
+        List<ProductEntity> products = productService.searchProducts(code, description);
+        return Response.ok(products).type(MediaType.APPLICATION_JSON).build();
     }
 }
