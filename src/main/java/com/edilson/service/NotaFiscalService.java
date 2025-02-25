@@ -7,17 +7,16 @@ import com.edilson.exception.NotaFiscalNotFoundException;
 import com.edilson.repository.NotaFiscalRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class NotaFiscalService {
 
-    private final NotaFiscalRepository notaFiscalRepository;
-    private final SuplierService suplierService;
+    @Inject
+    NotaFiscalRepository notaFiscalRepository;
 
-    public NotaFiscalService(NotaFiscalRepository notaFiscalRepository, SuplierService suplierService) {
-        this.notaFiscalRepository = notaFiscalRepository;
-        this.suplierService = suplierService;
-    }
+    @Inject
+    SuplierService suplierService;
 
     public List<NotaFiscalEntity> findAll(Integer page, Integer pageSize) {
         return notaFiscalRepository.findAll()

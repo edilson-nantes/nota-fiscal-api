@@ -4,6 +4,7 @@ import com.edilson.entity.SuplierEntity;
 import com.edilson.service.SuplierService;
 
 import jakarta.transaction.Transactional;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
@@ -22,11 +23,9 @@ import jakarta.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class SuplierController {
 
-    private final SuplierService suplierService;
-
-    public SuplierController(SuplierService suplierService) {
-        this.suplierService = suplierService;
-    }
+    
+    @Inject
+    SuplierService suplierService;
 
     @GET
     public Response findAll(@QueryParam("page") @DefaultValue("0") Integer page,

@@ -7,15 +7,13 @@ import com.edilson.exception.ProductNotFoundException;
 import com.edilson.repository.ProductRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class ProductService {
 
-    private final ProductRepository productRepository;
-
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    @Inject
+    ProductRepository productRepository;
     
     public ProductEntity createProduct(ProductEntity productEntity) {
         productRepository.persist(productEntity);

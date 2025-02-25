@@ -7,15 +7,13 @@ import com.edilson.exception.SuplierNotFoundException;
 import com.edilson.repository.SuplierRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class SuplierService {
 
-    private final SuplierRepository suplierRepository;
-
-    public SuplierService(SuplierRepository suplierRepository) {
-        this.suplierRepository = suplierRepository;
-    }
+    @Inject
+    SuplierRepository suplierRepository;
 
     public List<SuplierEntity> findAll(Integer page, Integer pageSize) {
         return suplierRepository.findAll()

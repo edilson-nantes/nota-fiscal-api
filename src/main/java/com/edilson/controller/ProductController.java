@@ -4,6 +4,7 @@ import com.edilson.entity.ProductEntity;
 import com.edilson.service.ProductService;
 
 import jakarta.transaction.Transactional;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
@@ -22,11 +23,8 @@ import jakarta.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProductController {
     
-    private final ProductService productService;
-
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+    @Inject
+    ProductService productService;
 
     @GET
     public Response findAll(@QueryParam("page") @DefaultValue("0") Integer page,

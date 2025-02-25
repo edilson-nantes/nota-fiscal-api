@@ -4,6 +4,7 @@ import com.edilson.entity.NotaFiscalEntity;
 import com.edilson.service.NotaFiscalService;
 
 import jakarta.transaction.Transactional;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
@@ -23,11 +24,8 @@ import jakarta.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class NotaFiscalController {
 
-    private final NotaFiscalService notaFiscalService;
-
-    public NotaFiscalController(NotaFiscalService notaFiscalService) {
-        this.notaFiscalService = notaFiscalService;
-    }
+    @Inject
+    NotaFiscalService notaFiscalService;
 
     @GET
     public Response findAll(@QueryParam("page") @DefaultValue("0") Integer page,
