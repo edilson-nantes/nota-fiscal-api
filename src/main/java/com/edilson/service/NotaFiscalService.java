@@ -26,8 +26,8 @@ public class NotaFiscalService {
     }
 
     public NotaFiscalEntity createNotaFiscal(NotaFiscalEntity notaFiscalEntity) {
-        var suplier = suplierService.findById(notaFiscalEntity.getSuplierId().getId());
-        notaFiscalEntity.setSuplierId(suplier);
+        var suplier = suplierService.findById(notaFiscalEntity.getSuplier().getId());
+        notaFiscalEntity.setSuplier(suplier);
         notaFiscalRepository.persist(notaFiscalEntity);
         
         return notaFiscalEntity;
@@ -41,11 +41,11 @@ public class NotaFiscalService {
 
     public NotaFiscalEntity updateNotaFiscal(Long id, NotaFiscalEntity notaFiscalEntity) {
         var notaFiscal = findById(id);
-        var suplier = suplierService.findById(notaFiscalEntity.getSuplierId().getId());
+        var suplier = suplierService.findById(notaFiscalEntity.getSuplier().getId());
         
         notaFiscal.setNumberNota(notaFiscalEntity.getNumberNota());
         notaFiscal.setEmissionDate(notaFiscalEntity.getEmissionDate());
-        notaFiscal.setSuplierId(suplier);
+        notaFiscal.setSuplier(suplier);
         notaFiscal.setAddress(notaFiscalEntity.getAddress());
         notaFiscal.setTotalValue(notaFiscalEntity.getTotalValue());
         

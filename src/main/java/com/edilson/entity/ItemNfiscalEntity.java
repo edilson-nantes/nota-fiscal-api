@@ -1,7 +1,6 @@
 package com.edilson.entity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,28 +19,29 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "tb_notas_fiscais")
-public class NotaFiscalEntity {
-
+@Table(name = "tb_item_nota_fiscal")
+public class ItemNfiscalEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "number_nota", nullable = false, length = 9)
-    private String numberNota;
-
-    @Column(name = "emission_date", nullable = false)
-    private Date emissionDate;
+    @ManyToOne
+    @JoinColumn(name = "nota_fiscal_id", nullable = false)
+    private NotaFiscalEntity notaFiscal;
 
     @ManyToOne
-    @JoinColumn(name = "suplier_id", nullable = false)
-    private SuplierEntity suplier;
+    @JoinColumn(name = "product_id", nullable = false)
+    private ProductEntity product;
+
+    @Column(name = "unit_value", nullable = false, columnDefinition = "DECIMAL(10,2)")
+    private float unitValue;
 
     @Column(nullable = false)
-    private String address;
+    private int quantity;
 
-    @Column(name = "total_value", nullable = false, columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")
-    private float totalValue = 0.00f;
+    @Column(name = "total_item_value", nullable = false, columnDefinition = "DECIMAL(10,2)")
+    private float totalItemValue;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -59,5 +59,4 @@ public class NotaFiscalEntity {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-    
 }
