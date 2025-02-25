@@ -15,7 +15,12 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "tb_products")
 public class ProductEntity{
     
@@ -39,9 +44,6 @@ public class ProductEntity{
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public ProductEntity() {
-    }
-
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -51,33 +53,5 @@ public class ProductEntity{
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public SituationProduct getSituation() {
-        return situation;
-    }
-
-    public void setSituation(SituationProduct situation) {
-        this.situation = situation;
     }
 }

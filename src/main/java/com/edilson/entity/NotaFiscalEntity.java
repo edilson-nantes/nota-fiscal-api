@@ -1,16 +1,15 @@
 package com.edilson.entity;
 
 import java.time.LocalDateTime;
-
-import com.edilson.enums.SituationSuplier;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -21,34 +20,28 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "tb_supliers")
-public class SuplierEntity {
-    
+@Table(name = "tb_notas_fiscais")
+public class NotaFiscalEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 50)
-    private String code;
+    @Column(name = "number_nota", nullable = false, length = 9)
+    private String numberNota;
 
-    @Column(name = "legal_name", nullable = false, length = 150)
-    private String legalName;
+    @Column(name = "emission_date", nullable = false)
+    private Date emissionDate;
 
-    @Column(nullable = false, length = 100)
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "suplier_id", nullable = false)
+    private SuplierEntity suplierId;
 
-    @Column(nullable = false, length = 20)
-    private String phone;
+    @Column(nullable = false)
+    private String address;
 
-    @Column(unique = true, nullable = false, length = 18)
-    private String cnpj;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
-    private SituationSuplier situation;
-
-    @Column(name = "data_baixa", nullable = true)
-    private LocalDateTime dataBaixa;
+    @Column(name = "total_value", nullable = false, columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")
+    private float totalValue = 0.00f;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -66,4 +59,5 @@ public class SuplierEntity {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+    
 }
