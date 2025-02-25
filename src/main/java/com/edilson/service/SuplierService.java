@@ -1,5 +1,6 @@
 package com.edilson.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.edilson.entity.SuplierEntity;
@@ -83,6 +84,53 @@ public class SuplierService {
         }
         
         suplierRepository.delete(suplier);
+    }
+
+    public List<SuplierEntity> searchSupliers(String code, String legalName, String email, String phone, String cnpj) {
+        StringBuilder queryBuilder = new StringBuilder("FROM SuplierEntity WHERE 1=1");
+        List<String> params = new ArrayList<>();
+
+        if (code != null && !code.isEmpty()) {
+            queryBuilder.append(" AND LOWER(code) LIKE :code");
+            params.add("%" + code.toLowerCase() + "%");
+        }
+        if (legalName != null && !legalName.isEmpty()) {
+            queryBuilder.append(" AND LOWER(legalName) LIKE :legalName");
+            params.add("%" + legalName.toLowerCase() + "%");
+        }
+        if (email != null && !email.isEmpty()) {
+            queryBuilder.append(" AND LOWER(email) LIKE :email");
+            params.add("%" + email.toLowerCase() + "%");
+        }
+        if (phone != null && !phone.isEmpty()) {
+            queryBuilder.append(" AND LOWER(phone) LIKE :phone");
+            params.add("%" + phone.toLowerCase() + "%");
+        }
+        if (cnpj != null && !cnpj.isEmpty()) {
+            queryBuilder.append(" AND LOWER(cnpj) LIKE :cnpj");
+            params.add("%" + cnpj.toLowerCase() + "%");
+        }
+
+        var query = suplierRepository.getEntityManager().createQuery(queryBuilder.toString(), SuplierEntity.class);
+
+        int paramIndex = 0;
+        if (code != null && !code.isEmpty()) {
+            query.setParameter("code", params.get(paramIndex++));
+        }
+        if (legalName != null && !legalName.isEmpty()) {
+            query.setParameter("legalName", params.get(paramIndex++));
+        }
+        if (email != null && !email.isEmpty()) {
+            query.setParameter("email", params.get(paramIndex++));
+        }
+        if (phone != null && !phone.isEmpty()) {
+            query.setParameter("phone", params.get(paramIndex++));
+        }
+        if (cnpj != null && !cnpj.isEmpty()) {
+            query.setParameter("cnpj", params.get(paramIndex++));
+        }
+
+        return query.getResultList();
     }
     
 }

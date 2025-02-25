@@ -60,4 +60,14 @@ public class SuplierController {
         
         return Response.noContent().build();
     }
+
+    @GET
+    @Path("/search")
+    public Response searchSupliers(@QueryParam("code") String code,
+                                   @QueryParam("legalName") String legalName,
+                                   @QueryParam("email") String email,
+                                   @QueryParam("phone") String phone,
+                                   @QueryParam("cnpj") String cnpj) {
+        return Response.ok(suplierService.searchSupliers(code, legalName, email, phone, cnpj)).build();
+    }
 }
