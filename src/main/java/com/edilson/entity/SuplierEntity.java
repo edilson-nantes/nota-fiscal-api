@@ -1,5 +1,6 @@
 package com.edilson.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.edilson.enums.SituationSuplier;
@@ -45,10 +46,13 @@ public class SuplierEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private SituationSuplier situation;
+    private SituationSuplier situation = SituationSuplier.Ativo;
 
     @Column(name = "data_baixa", nullable = true)
-    private LocalDateTime dataBaixa;
+    private LocalDate dataBaixa;
+
+    @Column(name = "has_movement", nullable = false)
+    private boolean hasMovement = false;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
