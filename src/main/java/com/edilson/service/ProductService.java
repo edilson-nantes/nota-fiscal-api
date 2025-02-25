@@ -1,5 +1,6 @@
 package com.edilson.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.edilson.entity.ProductEntity;
@@ -67,14 +68,30 @@ public class ProductService {
     }
 
     public List<ProductEntity> searchProducts(String code, String description) {
-        String searchCode = (code != null) ? "%" + code.toLowerCase() + "%" : "%";
-        String searchDescription = (description != null) ? "%" + description.toLowerCase() + "%" : "%";
-        
-        var query = productRepository.find("LOWER(code) LIKE ?1 OR LOWER(description) LIKE ?2", 
-                                           searchCode, 
-                                           searchDescription);
+        StringBuilder queryBuilder = new StringBuilder("FROM ProductEntity WHERE 1=1");
+        List<String> params = new ArrayList<>();
 
-        return query.list();
+        if (code != null && !code.isEmpty()) {
+            queryBuilder.append(" AND LOWER(code) LIKE :code");
+            params.add("%" + code.toLowerCase() + "%");
+        }
+        if (description != null && !description.isEmpty()) {
+            queryBuilder.append(" AND LOWER(description) LIKE :description");
+            params.add("%" + description.toLowerCase() + "%");
+        }
+
+        var query = productRepository.getEntityManager().createQuery(queryBuilder.toString(), ProductEntity.class);
+
+        int paramIndex = 0;
+
+        if (code != null && !code.isEmpty()) {
+            query.setParameter("code", params.get(paramIndex++));
+        }
+        if (description != null && !description.isEmpty()) {
+            query.setParameter("description", params.get(paramIndex++));
+        }
+
+        return query.getResultList();
     }
     
 }
