@@ -35,18 +35,32 @@ public class ProductService {
 
     public ProductEntity updateProduct(Long id, ProductEntity productEntity) {
         var product = findById(id);
-        
-        product.setCode(productEntity.getCode());
-        product.setDescription(productEntity.getDescription());
-        product.setSituation(productEntity.getSituation());
-        
-        productRepository.persist(product);
-        
-        return product;
+
+        if (product.isHasMovement()) {
+            if (!product.getSituation().equals(productEntity.getSituation())) {
+                product.setSituation(productEntity.getSituation());
+                productRepository.persist(product);
+
+                return product;
+            } else {
+                throw new IllegalStateException("Only the situation can be updated for a product with movement");
+            }
+        } else {
+            product.setCode(productEntity.getCode());
+            product.setDescription(productEntity.getDescription());
+            product.setSituation(productEntity.getSituation());
+
+            productRepository.persist(product);
+            return product;
+        }
     }
 
     public void deleteProduct(Long id) {
         var product = findById(id);
+
+        if (product.isHasMovement()) {
+            throw new IllegalStateException("Product has movement and cannot be deleted");
+        }
         
         productRepository.delete(product);
     }
@@ -58,7 +72,7 @@ public class ProductService {
         var query = productRepository.find("LOWER(code) LIKE ?1 OR LOWER(description) LIKE ?2", 
                                            searchCode, 
                                            searchDescription);
-                                           
+
         return query.list();
     }
     
