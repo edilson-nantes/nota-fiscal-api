@@ -34,7 +34,7 @@ public class ItemNfiscalService {
             .getProduct()
             .getId());
 
-        // Gerando uma entity auxiliar para atualizar o produto
+        //Gerando uma entity auxiliar para atualizar o produto
         ProductEntity productEntity = new ProductEntity();
         productEntity.setCode(product.getCode());
         productEntity.setDescription(product.getDescription());
@@ -57,6 +57,12 @@ public class ItemNfiscalService {
         
         //Persistindo a entity itemNfiscal
         itemNfiscalRepository.persist(itemNfiscal);
+
+        System.out.println(itemNfiscal.getNotaFiscal().getId());
+        System.out.println(itemNfiscal.getProduct().getId());
+        System.out.println(itemNfiscal.getQuantity());
+        System.out.println(itemNfiscal.getUnitValue());
+        System.out.println(itemNfiscal.getTotalItemValue());
 
         return itemNfiscal;
     }

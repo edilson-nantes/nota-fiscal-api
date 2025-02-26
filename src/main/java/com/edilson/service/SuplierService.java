@@ -52,6 +52,10 @@ public class SuplierService {
 
     public SuplierEntity updateSuplier(Long id, SuplierEntity suplierEntity) {
         var suplier = findById(id);
+
+        System.out.println(suplier.isHasMovement());
+
+        System.out.println(suplierEntity.isHasMovement());
         
         if (suplier.isHasMovement()) {
             if (!suplier.getSituation().equals(suplierEntity.getSituation())) {
@@ -71,6 +75,7 @@ public class SuplierService {
             suplier.setCnpj(suplierEntity.getCnpj());
             suplier.setSituation(suplierEntity.getSituation());
             suplier.setDataBaixa(suplierEntity.getDataBaixa());
+            suplier.setHasMovement(suplierEntity.isHasMovement());
             
             suplierRepository.persist(suplier);
             
