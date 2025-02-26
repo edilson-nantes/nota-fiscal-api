@@ -3,6 +3,7 @@ package com.edilson.service;
 import java.util.List;
 
 import com.edilson.entity.ItemNfiscalEntity;
+import com.edilson.entity.ProductEntity;
 import com.edilson.exception.itemNfiscal.ItemNfiscalNotFoundException;
 import com.edilson.repository.ItemNfiscalRepository;
 
@@ -28,15 +29,33 @@ public class ItemNfiscalService {
     }
     
     public ItemNfiscalEntity createItemNfiscal(ItemNfiscalEntity itemNfiscal) {
-        var notaFiscal = notaFiscalService.findById(itemNfiscal
-            .getNotaFiscal()
-            .getId());
+        //Buscando o produto pelo id
         var product = productService.findById(itemNfiscal
             .getProduct()
             .getId());
+
+        // Gerando uma entity auxiliar para atualizar o produto
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setCode(product.getCode());
+        productEntity.setDescription(product.getDescription());
+        productEntity.setSituation(product.getSituation());
+        productEntity.setHasMovement(true);
+
+        //Atualizando o produto usando o método updateProduct
+        productService.updateProduct(product.getId(), productEntity);
         
+        //Buscando a nota fiscal pelo id
+        var notaFiscal = notaFiscalService.findById(itemNfiscal
+            .getNotaFiscal()
+            .getId());
+        
+
         itemNfiscal.setNotaFiscal(notaFiscal);
         itemNfiscal.setProduct(product);
+        itemNfiscal.setTotalItemValue(itemNfiscal.calculateTotalItemValue(itemNfiscal.getQuantity(), itemNfiscal.getUnitValue()));
+
+        
+        //Persistindo a entity itemNfiscal
         itemNfiscalRepository.persist(itemNfiscal);
 
         return itemNfiscal;
@@ -51,10 +70,22 @@ public class ItemNfiscalService {
     public ItemNfiscalEntity updateItemNfiscal(Long id, ItemNfiscalEntity itemNfiscal) {
         var itemNfiscalEntity = findById(id);
         
+        //Buscando o produto pelo id
         var product = productService.findById(itemNfiscal
             .getProduct()
             .getId());
 
+        // Gerando uma entity auxiliar para atualizar o produto
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setCode(product.getCode());
+        productEntity.setDescription(product.getDescription());
+        productEntity.setSituation(product.getSituation());
+        productEntity.setHasMovement(true);
+
+        //Atualizando o produto usando o método updateProduct
+        productService.updateProduct(product.getId(), productEntity);
+        
+        //Buscando a nota fiscal pelo id
         var notaFiscal = notaFiscalService.findById(itemNfiscal
             .getNotaFiscal()
             .getId());
@@ -63,7 +94,7 @@ public class ItemNfiscalService {
         itemNfiscalEntity.setProduct(product);
         itemNfiscalEntity.setQuantity(itemNfiscal.getQuantity());
         itemNfiscalEntity.setUnitValue(itemNfiscal.getUnitValue());
-        itemNfiscalEntity.setTotalItemValue(itemNfiscal.getTotalItemValue());
+        itemNfiscalEntity.setTotalItemValue(itemNfiscal.calculateTotalItemValue(itemNfiscal.getQuantity(), itemNfiscal.getUnitValue()));
         
         return itemNfiscalEntity;
     }

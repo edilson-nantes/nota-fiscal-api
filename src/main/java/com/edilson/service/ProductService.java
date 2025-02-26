@@ -51,6 +51,7 @@ public class ProductService {
             product.setCode(productEntity.getCode());
             product.setDescription(productEntity.getDescription());
             product.setSituation(productEntity.getSituation());
+            product.setHasMovement(productEntity.isHasMovement());
 
             productRepository.persist(product);
             return product;
