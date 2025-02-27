@@ -59,6 +59,15 @@ public class ItemNfiscalService {
         //Persistindo a entity itemNfiscal
         itemNfiscalRepository.persist(itemNfiscal);
 
+        // Adicionando o item à lista de itens da nota fiscal
+        notaFiscal.getItems().add(itemNfiscal);
+
+        // Recalculando o valor total da nota fiscal
+        notaFiscal.setTotalValue(notaFiscal.calculateTotalValue());
+
+        // Atualizando a nota fiscal
+        notaFiscalService.updateNotaFiscal(notaFiscal.getId(), notaFiscal);
+
         return itemNfiscal;
     }
 

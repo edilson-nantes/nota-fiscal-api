@@ -63,31 +63,42 @@ public class NotaFiscalService {
     public NotaFiscalEntity updateNotaFiscal(Long id, NotaFiscalEntity notaFiscalEntity) {
         var notaFiscal = findById(id);
 
-        //Buscando o fornecedor pelo id
-        var suplier = suplierService.findById(notaFiscalEntity
-            .getSuplier()
-            .getId());
+        if (!notaFiscalEntity.getSuplier().getId().equals(notaFiscal.getSuplier().getId())) {
+            //Buscando o fornecedor pelo id
+            var suplier = suplierService.findById(notaFiscalEntity
+                .getSuplier()
+                .getId());
 
-        //Gerando uma entity auxiliar para atualizar o fornecedor
-        SuplierEntity suplierEntity = new SuplierEntity();
-        suplierEntity.setCode(suplier.getCode());
-        suplierEntity.setLegalName(suplier.getLegalName());
-        suplierEntity.setEmail(suplier.getEmail());
-        suplierEntity.setPhone(suplier.getPhone());
-        suplierEntity.setCnpj(suplier.getCnpj());
-        suplierEntity.setSituation(suplier.getSituation());
-        suplierEntity.setDataBaixa(suplier.getDataBaixa());
-        suplierEntity.setHasMovement(true);
+            //Gerando uma entity auxiliar para atualizar o fornecedor
+            SuplierEntity suplierEntity = new SuplierEntity();
+            suplierEntity.setCode(suplier.getCode());
+            suplierEntity.setLegalName(suplier.getLegalName());
+            suplierEntity.setEmail(suplier.getEmail());
+            suplierEntity.setPhone(suplier.getPhone());
+            suplierEntity.setCnpj(suplier.getCnpj());
+            suplierEntity.setSituation(suplier.getSituation());
+            suplierEntity.setDataBaixa(suplier.getDataBaixa());
+            suplierEntity.setHasMovement(true);
 
-        //Atualizando o fornecedor usando o método updateSuplier
-        suplierService.updateSuplier(suplier.getId(), suplierEntity);
-        
-        notaFiscal.setNumberNota(notaFiscalEntity.getNumberNota());
-        notaFiscal.setEmissionDate(notaFiscalEntity.getEmissionDate());
-        notaFiscal.setSuplier(suplier);
-        notaFiscal.setAddress(notaFiscalEntity.getAddress());
-        notaFiscal.setTotalValue(notaFiscalEntity.getTotalValue());
-        
+            //Atualizando o fornecedor usando o método updateSuplier
+            suplierService.updateSuplier(suplier.getId(), suplierEntity);
+            
+            //Atualizando a nota fiscal
+            notaFiscal.setNumberNota(notaFiscalEntity.getNumberNota());
+            notaFiscal.setEmissionDate(notaFiscalEntity.getEmissionDate());
+            notaFiscal.setSuplier(suplier);
+            notaFiscal.setAddress(notaFiscalEntity.getAddress());
+            notaFiscal.setTotalValue(notaFiscalEntity.getTotalValue());
+            
+        } else {
+            //Atualizando a nota fiscal
+            notaFiscal.setNumberNota(notaFiscalEntity.getNumberNota());
+            notaFiscal.setEmissionDate(notaFiscalEntity.getEmissionDate());
+            notaFiscal.setAddress(notaFiscalEntity.getAddress());
+            notaFiscal.setTotalValue(notaFiscalEntity.getTotalValue());
+        }
+
+        notaFiscalRepository.persist(notaFiscal);
         
         return notaFiscal;
     }
