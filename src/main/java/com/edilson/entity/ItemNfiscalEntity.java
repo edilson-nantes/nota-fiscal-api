@@ -2,6 +2,9 @@ package com.edilson.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "tb_item_nota_fiscal")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ItemNfiscalEntity {
     
     @Id
@@ -31,6 +35,7 @@ public class ItemNfiscalEntity {
     private NotaFiscalEntity notaFiscal;
 
     @ManyToOne
+    //@JsonBackReference
     @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity product;
 
@@ -58,5 +63,9 @@ public class ItemNfiscalEntity {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public float calculateTotalItemValue(int quantity, float unitValue) {
+        return quantity * unitValue;
     }
 }

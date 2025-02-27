@@ -71,6 +71,7 @@ public class SuplierService {
             suplier.setCnpj(suplierEntity.getCnpj());
             suplier.setSituation(suplierEntity.getSituation());
             suplier.setDataBaixa(suplierEntity.getDataBaixa());
+            suplier.setHasMovement(suplierEntity.isHasMovement());
             
             suplierRepository.persist(suplier);
             
