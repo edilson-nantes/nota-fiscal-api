@@ -52,10 +52,6 @@ public class SuplierService {
 
     public SuplierEntity updateSuplier(Long id, SuplierEntity suplierEntity) {
         var suplier = findById(id);
-
-        System.out.println(suplier.isHasMovement());
-
-        System.out.println(suplierEntity.isHasMovement());
         
         if (suplier.isHasMovement()) {
             if (!suplier.getSituation().equals(suplierEntity.getSituation())) {

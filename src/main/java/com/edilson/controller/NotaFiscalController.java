@@ -59,5 +59,11 @@ public class NotaFiscalController {
         notaFiscalService.deleteNotaFiscal(id);
         return Response.noContent().build();
     }
+
+    @GET
+    @Path("/search")
+    public Response searchNotas(@QueryParam("numberNota") String numberNota) {
+        return Response.ok(notaFiscalService.searchNotas(numberNota)).build();
+    }
     
 }

@@ -3,6 +3,7 @@ package com.edilson.service;
 import java.util.List;
 
 import com.edilson.entity.ItemNfiscalEntity;
+import com.edilson.entity.NotaFiscalEntity;
 import com.edilson.entity.ProductEntity;
 import com.edilson.exception.itemNfiscal.ItemNfiscalNotFoundException;
 import com.edilson.repository.ItemNfiscalRepository;
@@ -30,7 +31,7 @@ public class ItemNfiscalService {
     
     public ItemNfiscalEntity createItemNfiscal(ItemNfiscalEntity itemNfiscal) {
         //Buscando o produto pelo id
-        var product = productService.findById(itemNfiscal
+        ProductEntity product = productService.findById(itemNfiscal
             .getProduct()
             .getId());
 
@@ -45,7 +46,7 @@ public class ItemNfiscalService {
         productService.updateProduct(product.getId(), productEntity);
         
         //Buscando a nota fiscal pelo id
-        var notaFiscal = notaFiscalService.findById(itemNfiscal
+        NotaFiscalEntity notaFiscal = notaFiscalService.findById(itemNfiscal
             .getNotaFiscal()
             .getId());
         
@@ -57,12 +58,6 @@ public class ItemNfiscalService {
         
         //Persistindo a entity itemNfiscal
         itemNfiscalRepository.persist(itemNfiscal);
-
-        System.out.println(itemNfiscal.getNotaFiscal().getId());
-        System.out.println(itemNfiscal.getProduct().getId());
-        System.out.println(itemNfiscal.getQuantity());
-        System.out.println(itemNfiscal.getUnitValue());
-        System.out.println(itemNfiscal.getTotalItemValue());
 
         return itemNfiscal;
     }

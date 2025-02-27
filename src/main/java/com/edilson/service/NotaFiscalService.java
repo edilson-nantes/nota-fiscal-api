@@ -1,5 +1,6 @@
 package com.edilson.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.edilson.entity.NotaFiscalEntity;
@@ -95,6 +96,24 @@ public class NotaFiscalService {
         var notaFiscal = findById(id);
         
         notaFiscalRepository.delete(notaFiscal);
+    }
+
+    public List<NotaFiscalEntity> searchNotas(String numberNota) {
+        StringBuilder queryBuilder = new StringBuilder("FROM NotaFiscalEntity WHERE 1=1");
+        List<String> params = new ArrayList<>();
+
+        if (numberNota != null && !numberNota.isEmpty()) {
+            queryBuilder.append(" AND LOWER(numberNota) LIKE :numberNota");
+            params.add("%" + numberNota.toLowerCase() + "%");
+        }
+
+        var query = notaFiscalRepository.getEntityManager().createQuery(queryBuilder.toString(), NotaFiscalEntity.class);
+
+        if (numberNota != null && !numberNota.isEmpty()) {
+            query.setParameter("numberNota", params.get(0));
+        }
+
+        return query.getResultList();
     }
     
 }
