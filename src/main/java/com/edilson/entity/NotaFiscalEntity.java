@@ -9,7 +9,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -68,7 +67,7 @@ public class NotaFiscalEntity {
     @Schema(description = "Data de atualização da Nota Fiscal", example = "2025-02-27T10:15:30")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "notaFiscal", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "notaFiscal", fetch = FetchType.EAGER)
     @Schema(description = "Lista de itens associados à Nota Fiscal")
     private List<ItemNfiscalEntity> items;
 

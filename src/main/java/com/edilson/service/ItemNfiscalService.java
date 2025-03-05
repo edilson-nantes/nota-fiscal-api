@@ -123,8 +123,15 @@ public class ItemNfiscalService {
 
     public void deleteItemNfiscal(Long id) {
         var itemNfiscal = findById(id);
+
+        var notaFiscal = itemNfiscal.getNotaFiscal();
+
+        notaFiscal.setTotalValue(notaFiscal.getTotalValue() - itemNfiscal.getTotalItemValue());
         
         itemNfiscalRepository.delete(itemNfiscal);
+
+        // Atualizando a nota fiscal
+        notaFiscalService.updateNotaFiscal(notaFiscal.getId(), notaFiscal);
     }
     
 }
