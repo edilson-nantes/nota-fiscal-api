@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,7 +36,7 @@ public class ItemNfiscalEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "nota_fiscal_id", nullable = false)
+    @JoinColumn(name = "nota_fiscal_id", nullable = false, foreignKey = @ForeignKey(name = "fk_nota_fiscal", foreignKeyDefinition = "FOREIGN KEY (nota_fiscal_id) REFERENCES tb_notas_fiscais(id) ON DELETE CASCADE"))
     @Schema(description = "Nota Fiscal associada ao Item")
     private NotaFiscalEntity notaFiscal;
 
