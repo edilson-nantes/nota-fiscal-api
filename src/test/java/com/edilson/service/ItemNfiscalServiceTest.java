@@ -286,8 +286,39 @@ class ItemNfiscalServiceTest {
 
     @Test
     void testDeleteItemNfiscal() {
+        ProductEntity product = new ProductEntity();
+        product.setId(1L);
+        product.setCode("P001");
+        product.setDescription("Product 1");
+        product.setSituation(SituationProduct.Ativo);
+        product.setHasMovement(false);
+
+        SuplierEntity suplier = new SuplierEntity();
+        suplier.setId(1L);
+        suplier.setCode("S001");
+        suplier.setCnpj("12345678901234");
+        suplier.setLegalName("Suplier 1");
+        suplier.setEmail("B2u2I@example.com");
+        suplier.setPhone("1234567890");
+        suplier.setSituation(SituationSuplier.Ativo);
+        suplier.setHasMovement(false);
+
+        List<ItemNfiscalEntity> items = new ArrayList<>();
+
+        NotaFiscalEntity notaFiscal = new NotaFiscalEntity();
+        notaFiscal.setId(1L);
+        notaFiscal.setNumberNota("123");
+        notaFiscal.setSuplier(suplier);
+        notaFiscal.setItems(
+            items
+        );
+
         ItemNfiscalEntity itemNfiscal = new ItemNfiscalEntity();
         itemNfiscal.setId(1L);
+        itemNfiscal.setProduct(product);
+        itemNfiscal.setNotaFiscal(notaFiscal);
+        itemNfiscal.setQuantity(10);
+        itemNfiscal.setUnitValue((float) 100.00);
 
         when(query.firstResultOptional()).thenReturn(Optional.of(itemNfiscal));
         when(itemNfiscalRepository.find("id", 1L)).thenReturn(query);
