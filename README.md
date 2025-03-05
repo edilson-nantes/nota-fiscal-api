@@ -145,6 +145,12 @@ quarkus.hibernate-orm.database.generation=update
 mvn quarkus:dev
 ```
 
+- Para rodar os testes unitários com relatório de cobertura digite:
+```bash
+mvn test jacoco:report -Djacoco.agent
+```
+- Em seguida acesse a pasta target/site/jacoco, gerada na raíz do projeto, e abra o arquivo html no seu navegador
+
 - Por ultimo abra sua ferramenta de teste para API e digite o seguinte base URL:
 
 ```
