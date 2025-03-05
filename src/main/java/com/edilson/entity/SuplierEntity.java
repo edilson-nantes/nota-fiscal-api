@@ -7,8 +7,6 @@ import java.util.List;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import com.edilson.enums.SituationSuplier;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +29,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "tb_supliers")
 @Schema(description = "Entidade que representa um Fornecedor")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class SuplierEntity {
     
     @Id
