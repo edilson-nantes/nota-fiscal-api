@@ -7,10 +7,7 @@ import java.util.List;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import com.edilson.enums.SituationSuplier;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,7 +29,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "tb_supliers")
 @Schema(description = "Entidade que representa um Fornecedor")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class SuplierEntity {
     
     @Id
@@ -81,7 +77,7 @@ public class SuplierEntity {
     @Schema(description = "Data de atualização do Fornecedor", example = "2025-02-27T10:15:30")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "suplier", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "suplier", fetch = FetchType.EAGER)
     @Schema(description = "Lista de notas fiscais associadas ao Fornecedor")
     private List<NotaFiscalEntity> notasFiscais;
 

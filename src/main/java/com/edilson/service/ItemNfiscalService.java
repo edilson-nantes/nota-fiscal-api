@@ -85,15 +85,19 @@ public class ItemNfiscalService {
             .getProduct()
             .getId());
 
-        // Gerando uma entity auxiliar para atualizar o produto
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setCode(product.getCode());
-        productEntity.setDescription(product.getDescription());
-        productEntity.setSituation(product.getSituation());
-        productEntity.setHasMovement(true);
+        if (itemNfiscalEntity.getProduct().getId() != product.getId()) {
+            // Gerando uma entity auxiliar para atualizar o produto
+            ProductEntity productEntity = new ProductEntity();
+            productEntity.setCode(product.getCode());
+            productEntity.setDescription(product.getDescription());
+            productEntity.setSituation(product.getSituation());
+            productEntity.setHasMovement(true);
 
-        //Atualizando o produto usando o método updateProduct
-        productService.updateProduct(product.getId(), productEntity);
+            //Atualizando o produto usando o método updateProduct
+            productService.updateProduct(product.getId(), productEntity);
+        }
+
+       
         
         //Buscando a nota fiscal pelo id
         var notaFiscal = notaFiscalService.findById(itemNfiscal
@@ -105,14 +109,29 @@ public class ItemNfiscalService {
         itemNfiscalEntity.setQuantity(itemNfiscal.getQuantity());
         itemNfiscalEntity.setUnitValue(itemNfiscal.getUnitValue());
         itemNfiscalEntity.setTotalItemValue(itemNfiscal.calculateTotalItemValue(itemNfiscal.getQuantity(), itemNfiscal.getUnitValue()));
+
+        itemNfiscalRepository.persist(itemNfiscalEntity);
+
+        // Recalculando o valor total da nota fiscal
+        notaFiscal.setTotalValue(notaFiscal.calculateTotalValue());
+
+        // Atualizando a nota fiscal
+        notaFiscalService.updateNotaFiscal(notaFiscal.getId(), notaFiscal);
         
         return itemNfiscalEntity;
     }
 
     public void deleteItemNfiscal(Long id) {
         var itemNfiscal = findById(id);
+
+        var notaFiscal = itemNfiscal.getNotaFiscal();
+
+        notaFiscal.setTotalValue(notaFiscal.getTotalValue() - itemNfiscal.getTotalItemValue());
         
         itemNfiscalRepository.delete(itemNfiscal);
+
+        // Atualizando a nota fiscal
+        notaFiscalService.updateNotaFiscal(notaFiscal.getId(), notaFiscal);
     }
     
 }

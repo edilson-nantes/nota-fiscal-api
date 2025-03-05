@@ -6,10 +6,7 @@ import java.util.List;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import com.edilson.enums.SituationProduct;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,7 +28,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "tb_products")
 @Schema(description = "Entidade que representa um Produto")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ProductEntity{
     
     @Id
@@ -64,7 +60,7 @@ public class ProductEntity{
     @Schema(description = "Data de atualização do Produto", example = "2025-02-27T10:15:30")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @Schema(description = "Itens de Nota Fiscal associados ao Produto")
     private List<ItemNfiscalEntity> itemNfiscals;
 
